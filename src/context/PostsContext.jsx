@@ -11,7 +11,8 @@ export const PostsProvider = ({ children }) => {
   // Fetch posts
   const getAllPosts = async () => {
     const response = await fetch(
-      "https://blog-system-server.vercel.app/api/posts"
+      "https://blog-system-server.vercel.app/api/posts",
+      { withCredentials: true, headers: { "content-type": "application/json" } }
     );
     const data = await response.json();
     if (!response.ok) {
