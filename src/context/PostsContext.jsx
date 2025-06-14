@@ -10,7 +10,9 @@ export const PostsProvider = ({ children }) => {
 
   // Fetch posts
   const getAllPosts = async () => {
-    const response = await fetch("http://localhost:4000/api/posts");
+    const response = await fetch(
+      "https://blog-system-server.vercel.app/api/posts"
+    );
     const data = await response.json();
     if (!response.ok) {
       throw new Error(data.message || "Failed to fetch posts");
@@ -33,14 +35,17 @@ export const PostsProvider = ({ children }) => {
 
   //Post operations
   const createPost = async (postData) => {
-    const response = await fetch("http://localhost:4000/api/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(postData),
-    });
+    const response = await fetch(
+      "https://blog-system-server.vercel.app/api/posts",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(postData),
+      }
+    );
 
     const data = await response.json();
     if (!response.ok) {
@@ -52,14 +57,17 @@ export const PostsProvider = ({ children }) => {
   };
 
   const updatePost = async (postId, postData) => {
-    const response = await fetch(`http://localhost:4000/api/posts/${postId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(postData),
-    });
+    const response = await fetch(
+      `https://blog-system-server.vercel.app/api/posts/${postId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(postData),
+      }
+    );
 
     const data = await response.json();
     if (!response.ok) {
@@ -71,12 +79,15 @@ export const PostsProvider = ({ children }) => {
   };
 
   const deletePost = async (postId) => {
-    const response = await fetch(`http://localhost:4000/api/posts/${postId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `https://blog-system-server.vercel.app/api/posts/${postId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const data = await response.json();
