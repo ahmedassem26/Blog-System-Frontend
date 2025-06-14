@@ -12,7 +12,7 @@ function Post({ post }) {
   };
 
   return (
-    <div className="card bg-base-200 focus:shadow-purple-900 hover:shadow-purple-900 transition-all duration-300 w-full max-w-sm shadow-lg mx-auto">
+    <div className="card bg-base-200 active:shadow-purple-900 hover:shadow-purple-900 transition-all duration-300 w-full max-w-sm shadow-lg mx-auto">
       <figure>
         <img
           src={post.imageUrl}
