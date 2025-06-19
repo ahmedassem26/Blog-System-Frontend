@@ -9,7 +9,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="bg-base-100  shadow-purple-500">
+    <nav className="bg-base-100 shadow-xl shadow-purple-700/20 fixed top-0 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
