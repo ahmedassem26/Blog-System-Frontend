@@ -6,19 +6,31 @@ export const PostsContext = createContext();
 export const PostsProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [postMode, setpostMode] = useState("Add");
+  const [loading, setLoading] = useState(true);
   const { token, user } = useContext(AuthContext);
 
   // Fetch posts
   const getAllPosts = async () => {
-    const response = await fetch(
-      "https://blog-system-server.vercel.app/api/posts",
-      { withCredentials: true, headers: { "content-type": "application/json" } }
-    );
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(data.message || "Failed to fetch posts");
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "https://blog-system-server.vercel.app/api/posts",
+        {
+          withCredentials: true,
+          headers: { "content-type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch posts");
+      }
+      setPosts(data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      throw error;
+    } finally {
+      setLoading(false);
     }
-    setPosts(data);
   };
 
   useEffect(() => {
@@ -111,6 +123,7 @@ export const PostsProvider = ({ children }) => {
         token,
         user,
         isLoggedIn: !!(token && user),
+        postsLoading: loading,
       }}
     >
       {children}
