@@ -25,6 +25,7 @@ export const PostsProvider = ({ children }) => {
         throw new Error(data.message || "Failed to fetch posts");
       }
       setPosts(data);
+      setTimeout(() => setLoading(false), 0);
     } catch (error) {
       console.error("Error fetching posts:", error);
       throw error;
