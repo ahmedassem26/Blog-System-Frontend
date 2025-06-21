@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }) => {
     const response = await fetch(
       "https://blog-system-server.vercel.app/api/auth/login",
       {
-        withCredentials: true,
+        credentials: "include",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     const response = await fetch(
       "https://blog-system-server.vercel.app/api/auth/register",
       {
-        withCredentials: true,
+        credentials: "include",
         method: "POST",
         headers: {
           "Content-Type": "application/json",

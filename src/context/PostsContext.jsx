@@ -16,7 +16,7 @@ export const PostsProvider = ({ children }) => {
       const response = await fetch(
         "https://blog-system-server.vercel.app/api/posts",
         {
-          withCredentials: true,
+          credentials: "include",
           headers: { "content-type": "application/json" },
         }
       );
