@@ -64,7 +64,7 @@ function Home() {
             <Link
               onClick={handleAddPost}
               to="/add"
-              className="btn btn-circle border-0 shadow-2xl shadow-purple-900 size-15 fixed right-8 bottom-8 bg-purple-700 hover:bg-purple-800 transition-all duration-300"
+              className="btn btn-circle border-0 shadow-2xl shadow-purple-700/30 size-15 fixed right-8 bottom-8 bg-purple-700 hover:bg-purple-800 transition-all duration-300"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
