@@ -16,7 +16,7 @@ function Post({ post }) {
       <figure>
         <img
           src={post.imageUrl}
-          alt="Shoes"
+          alt={post.description}
           className="w-full h-48 object-cover"
         />
       </figure>
