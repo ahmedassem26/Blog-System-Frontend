@@ -21,7 +21,7 @@ function Home() {
 
   return (
     <>
-      <h1 className="text-6xl font-semibold text-center mt-10 underline underline-offset-8 decoration-purple-700 decoration-4">
+      <h1 className="text-5xl md:text-6xl mx-4 font-semibold text-center mt-10 underline underline-offset-8 decoration-purple-700 decoration-4">
         Welcome to my Blog
       </h1>
       <h2 className="text-2xl font-extralight text-center mt-5">
