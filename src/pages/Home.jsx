@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 function Home() {
   const { posts, isLoggedIn, handleAddPost } = useContext(PostsContext);
   const { loading } = useContext(AuthContext);
-  const { postLoading } = useContext(PostsContext);
+  const { postsLoading } = useContext(PostsContext);
 
-  const isLoadingPosts = loading || postLoading;
+  const isLoadingPosts = loading || postsLoading;
 
   if (isLoadingPosts) {
     return (
