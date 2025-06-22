@@ -20,100 +20,6 @@ function Home() {
     }
   }, [isLoadingPosts]);
 
-  // Use test data for posts
-  const test = [
-    {
-      _id: "684ca8fa17144e1ad69644bb",
-      title: "Sunset Serenity",
-      description: "A peaceful view of the sun setting over calm waters.",
-      imageUrl: "https://picsum.photos/id/1015/600/400",
-      author: "684c31c177765ffe292f794a",
-      createdAt: "2025-06-13T22:40:58.074Z",
-      updatedAt: "2025-06-13T22:51:11.850Z",
-      __v: 0,
-    },
-    {
-      _id: "684caa5817144e1ad69644c3",
-      title: "City Lights",
-      description: "The vibrant energy of the city skyline at night.",
-      imageUrl: "https://picsum.photos/id/1011/600/400",
-      author: "684c31c177765ffe292f794a",
-      createdAt: "2025-06-13T22:46:48.034Z",
-      updatedAt: "2025-06-13T22:51:41.686Z",
-      __v: 0,
-    },
-    {
-      _id: "684caa7b17144e1ad69644c7",
-      title: "Mountain Majesty",
-      description: "Snow-capped peaks standing tall against the sky.",
-      imageUrl: "https://picsum.photos/id/1003/600/400",
-      author: "684c31c177765ffe292f794a",
-      createdAt: "2025-06-13T22:47:23.317Z",
-      updatedAt: "2025-06-13T22:52:22.057Z",
-      __v: 0,
-    },
-    {
-      _id: "684cac0b17144e1ad69644ea",
-      title: "Forest Trail",
-      description: "A peaceful trail through dense green woods.",
-      imageUrl: "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-      author: "684c3c5c77765ffe292f7973",
-      createdAt: "2025-06-13T22:54:03.814Z",
-      updatedAt: "2025-06-13T22:54:03.814Z",
-      __v: 0,
-    },
-    {
-      _id: "684cac3c17144e1ad69644f0",
-      title: "Ocean Breeze",
-      description: "Waves crashing on the beach under a clear blue sky.",
-      imageUrl: "https://picsum.photos/id/1018/600/400",
-      author: "684c3c5c77765ffe292f7973",
-      createdAt: "2025-06-13T22:54:52.262Z",
-      updatedAt: "2025-06-13T22:54:52.262Z",
-      __v: 0,
-    },
-    {
-      _id: "684cac8917144e1ad69644f4",
-      title: "Desert Dunes",
-      description: "Golden sands stretching into the horizon.",
-      imageUrl: "https://picsum.photos/id/1002/600/400",
-      author: "684c3c5c77765ffe292f7973",
-      createdAt: "2025-06-13T22:56:09.578Z",
-      updatedAt: "2025-06-13T22:56:09.578Z",
-      __v: 0,
-    },
-    {
-      _id: "684cace717144e1ad69644fc",
-      title: "Autumn Leaves",
-      description: "Colorful foliage marking the change of seasons.",
-      imageUrl: "https://picsum.photos/id/1019/600/400",
-      author: "684cacbe17144e1ad69644f9",
-      createdAt: "2025-06-13T22:57:43.523Z",
-      updatedAt: "2025-06-13T22:57:43.523Z",
-      __v: 0,
-    },
-    {
-      _id: "684cad0817144e1ad6964500",
-      title: "Starry Night",
-      description: "A sky full of stars over a quiet countryside.",
-      imageUrl: "https://picsum.photos/id/1024/600/400",
-      author: "684cacbe17144e1ad69644f9",
-      createdAt: "2025-06-13T22:58:16.348Z",
-      updatedAt: "2025-06-13T22:58:16.348Z",
-      __v: 0,
-    },
-    {
-      _id: "684cad2217144e1ad6964504",
-      title: "Rainy Window",
-      description: "Raindrops tracing patterns on a glass pane.",
-      imageUrl: "https://picsum.photos/id/1025/600/400",
-      author: "684cacbe17144e1ad69644f9",
-      createdAt: "2025-06-13T22:58:42.299Z",
-      updatedAt: "2025-06-13T22:58:42.299Z",
-      __v: 0,
-    },
-  ];
-
   if (isLoadingPosts) {
     return (
       <div className="min-h-screen flex justify-center items-center  bg-slate-900">
@@ -168,7 +74,6 @@ function Home() {
       </div>
 
       {/* Empty state with dark theme */}
-      {/* {false && ( */}
       {posts.length === 0 && (
         <div className="max-w-2xl mx-auto px-4 text-center">
           <div className="bg-base-300/60 backdrop-blur-xl rounded-2xl p-8 shadow-2xl border border-slate-700/50 ring-1 ring-purple-500/10">
@@ -243,7 +148,6 @@ function Home() {
       )}
 
       {/* Posts grid with dark theme */}
-      {/* {true && ( */}
       {posts.length > 0 && (
         <div className="max-w-7xl mx-auto px-4 py-8">
           {/* Section header */}
