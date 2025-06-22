@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { PostsContext } from "../context/PostsContext";
 import { AuthContext } from "../context/AuthContext";
 import Post from "../components/Post";
@@ -10,6 +10,15 @@ function Home() {
   const { postsLoading } = useContext(PostsContext);
 
   const isLoadingPosts = loading || postsLoading;
+
+  useEffect(() => {
+    if (!isLoadingPosts) {
+      // Small delay to ensure content is rendered
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 100);
+    }
+  }, [isLoadingPosts]);
 
   // Use test data for posts
   const test = [
