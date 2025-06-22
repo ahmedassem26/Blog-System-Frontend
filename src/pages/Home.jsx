@@ -60,7 +60,7 @@ function Home() {
             <div className="h-0.5 w-20 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full shadow-lg shadow-purple-500/50"></div>
           </div>
           <h2
-            className="text-lg md:text-xl font-light text-base-content/80 text-center mt-4 opacity-0"
+            className="text-lg md:text-xl font-light text-base-content/80 text-center mx-4 mt-4 opacity-0"
             style={{ animation: "slideInUp 0.6s ease-out 0.6s forwards" }}
           >
             Start your journey with us by browsing our posts

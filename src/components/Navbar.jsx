@@ -5,8 +5,16 @@ import Modal from "./Modal";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
-  const [isModalOpen, setModalOpen] = useState();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    setModalOpen(false);
+    setMobileMenuOpen(false);
+    navigate("/login");
+  };
 
   return (
     <>
@@ -21,11 +29,12 @@ const Navbar = () => {
             <div className="flex-shrink-0">
               <Link
                 to="/"
-                className="group flex items-center space-x-2 text-xl font-bold bg-gradient-to-r from-purple-400 to-purple-300 bg-clip-text text-transparent hover:from-purple-300 hover:to-purple-200 transition-all duration-300"
+                className="group flex items-center space-x-2 text-lg sm:text-xl font-bold bg-gradient-to-r from-purple-400 to-purple-300 bg-clip-text text-transparent hover:from-purple-300 hover:to-purple-200 transition-all duration-300"
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <div className="p-2 bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-lg border border-purple-500/30 group-hover:border-purple-400/50 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/25">
+                <div className="p-1.5 sm:p-2 bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-lg border border-purple-500/30 group-hover:border-purple-400/50 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-purple-500/25">
                   <svg
-                    className="w-5 h-5 text-purple-400 group-hover:text-purple-300 transition-colors duration-300"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400 group-hover:text-purple-300 transition-colors duration-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -38,12 +47,12 @@ const Navbar = () => {
                     />
                   </svg>
                 </div>
-                <span>Blog System</span>
+                <span className="hidden xs:inline">Blog System</span>
               </Link>
             </div>
 
-            {/* Welcome message */}
-            <div className="hidden md:flex items-center">
+            {/* Desktop welcome message */}
+            <div className="hidden lg:flex items-center">
               {user && (
                 <div className="flex items-center space-x-2 px-4 py-2 bg-purple-500/10 backdrop-blur-sm border border-purple-500/20 rounded-full">
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -57,40 +66,28 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Action buttons */}
-            <div className="flex items-center space-x-3">
+            {/* Desktop Action buttons */}
+            <div className="hidden md:flex items-center space-x-3">
               {user ? (
-                <div className="flex items-center space-x-3">
-                  {/* Mobile welcome message */}
-                  <div className="md:hidden flex items-center">
-                    <span className="text-sm text-base-content/80">
-                      Hi,{" "}
-                      <span className="text-purple-400 font-medium">
-                        {user.username}
-                      </span>
-                    </span>
-                  </div>
-
-                  <button
-                    onClick={() => setModalOpen(true)}
-                    className="group flex items-center space-x-2 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-400/50 text-red-400 hover:text-red-300 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="group flex items-center space-x-2 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-400/50 text-red-400 hover:text-red-300 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
+                >
+                  <svg
+                    className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                      />
-                    </svg>
-                    <span className="font-medium">Logout</span>
-                  </button>
-                </div>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    />
+                  </svg>
+                  <span className="font-medium">Logout</span>
+                </button>
               ) : (
                 <div className="flex items-center space-x-3">
                   <Link
@@ -139,6 +136,138 @@ const Navbar = () => {
                 </div>
               )}
             </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden flex items-center space-x-2">
+              {/* Mobile user indicator */}
+              {user && (
+                <div className="flex items-center space-x-1 px-2 py-1 bg-purple-500/10 backdrop-blur-sm border border-purple-500/20 rounded-lg">
+                  <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-purple-400 font-medium max-w-16 truncate">
+                    {user.username}
+                  </span>
+                </div>
+              )}
+
+              <button
+                onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+                className="group p-2 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 hover:border-purple-400/50 text-purple-400 hover:text-purple-300 rounded-xl transition-all duration-300"
+                aria-label="Toggle mobile menu"
+              >
+                <svg
+                  className={`w-5 h-5 transform transition-transform duration-300 ${
+                    isMobileMenuOpen ? "rotate-90" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  {isMobileMenuOpen ? (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  ) : (
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  )}
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="px-4 py-3 space-y-3 bg-base-300/95 backdrop-blur-xl border-t border-purple-500/20">
+            {user ? (
+              <div className="space-y-3">
+                {/* Mobile welcome message */}
+                <div className="flex items-center justify-center space-x-2 px-4 py-3 bg-purple-500/10 backdrop-blur-sm border border-purple-500/20 rounded-xl">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-base-content/90 font-medium">
+                    Welcome,{" "}
+                    <span className="text-purple-400 font-semibold">
+                      {user.username}
+                    </span>
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="w-full group flex items-center justify-center space-x-2 px-4 py-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-400/50 text-red-400 hover:text-red-300 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
+                >
+                  <svg
+                    className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    />
+                  </svg>
+                  <span className="font-medium">Logout</span>
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full group flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-medium rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-0.5 transition-all duration-300 border border-purple-500/20"
+                >
+                  <svg
+                    className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                    />
+                  </svg>
+                  <span>Login</span>
+                </Link>
+
+                <Link
+                  to="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full group flex items-center justify-center space-x-2 px-4 py-3 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 hover:border-purple-400/50 text-purple-400 hover:text-purple-300 font-medium rounded-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  <svg
+                    className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                    />
+                  </svg>
+                  <span>Register</span>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </nav>
@@ -176,7 +305,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="flex justify-end space-x-3 pt-4">
+          <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 pt-4">
             <button
               onClick={() => setModalOpen(false)}
               className="px-4 py-2 bg-base-200/50 hover:bg-base-200 border border-base-content/20 hover:border-base-content/30 text-base-content/80 hover:text-base-content rounded-xl transition-all duration-300"
@@ -184,11 +313,7 @@ const Navbar = () => {
               Cancel
             </button>
             <button
-              onClick={() => {
-                logout();
-                setModalOpen(false);
-                navigate("/login");
-              }}
+              onClick={handleLogout}
               className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-medium rounded-xl shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-0.5 transition-all duration-300 border border-red-500/20"
             >
               Yes, Log out
