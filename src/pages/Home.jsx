@@ -250,29 +250,62 @@ function Home() {
             ))}
           </div>
 
-          {/* Enhanced dark floating action button */}
+          {/* Enhanced floating action button with premium styling */}
           {isLoggedIn && (
             <Link
               onClick={handleAddPost}
               to="/add"
-              className="group fixed right-6 bottom-6 w-16 h-16 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white rounded-full shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 transform hover:scale-110 transition-all duration-300 flex items-center justify-center z-50 border border-purple-500/20 backdrop-blur-sm"
+              className="group fixed right-6 bottom-6 z-50"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-7 h-7 group-hover:rotate-90 transition-transform duration-300"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              {/* Dark floating button glow effect */}
-              <div className="absolute inset-0 rounded-full bg-purple-400/20 blur-xl scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative">
+                {/* Main button */}
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 hover:from-purple-500 hover:via-purple-600 hover:to-purple-700 text-white rounded-full shadow-2xl shadow-purple-500/40 hover:shadow-purple-400/60 transform hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center border-2 border-purple-400/30 hover:border-purple-300/50 backdrop-blur-xl relative overflow-hidden">
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
+
+                  {/* Icon */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2.5}
+                    stroke="currentColor"
+                    className="w-7 h-7 group-hover:rotate-90 transition-transform duration-300 relative z-10 drop-shadow-lg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+
+                  {/* Inner glow */}
+                  <div className="absolute inset-1 rounded-full bg-gradient-to-br from-purple-400/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+
+                {/* Outer glow rings */}
+                <div className="absolute inset-0 rounded-full bg-purple-500/20 blur-xl scale-125 opacity-60 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500"></div>
+                <div className="absolute inset-0 rounded-full bg-purple-400/10 blur-2xl scale-150 opacity-40 group-hover:opacity-80 group-hover:scale-200 transition-all duration-700"></div>
+
+                {/* Floating particles */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute -top-2 -right-2 w-1 h-1 bg-purple-300 rounded-full animate-bounce delay-100"></div>
+                  <div className="absolute -bottom-2 -left-2 w-1.5 h-1.5 bg-purple-400 rounded-full animate-bounce delay-300"></div>
+                  <div className="absolute -top-1 -left-3 w-1 h-1 bg-purple-200 rounded-full animate-bounce delay-500"></div>
+                </div>
+
+                {/* Ripple effect on hover */}
+                <div className="absolute inset-0 rounded-full border border-purple-300/0 group-hover:border-purple-300/40 group-hover:scale-125 transition-all duration-300"></div>
+                <div className="absolute inset-0 rounded-full border border-purple-200/0 group-hover:border-purple-200/20 group-hover:scale-150 transition-all duration-500 delay-100"></div>
+
+                {/* Tooltip */}
+                <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-200">
+                  <div className="bg-slate-800/90 backdrop-blur-sm text-white text-sm px-3 py-1.5 rounded-lg shadow-xl border border-slate-700/50 whitespace-nowrap">
+                    Create Post
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-800/90"></div>
+                  </div>
+                </div>
+              </div>
             </Link>
           )}
         </div>
