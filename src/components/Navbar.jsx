@@ -47,7 +47,9 @@ const Navbar = () => {
                     />
                   </svg>
                 </div>
-                <span className="hidden xs:inline">Blog System</span>
+                <span className=" inline xs:text-lg md:text-2xl">
+                  &lt;Assem-Blog&gt;
+                </span>
               </Link>
             </div>
 
