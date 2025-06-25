@@ -110,6 +110,128 @@ export const PostsProvider = ({ children }) => {
     setPosts(posts.filter((post) => post._id !== postId));
   };
 
+  // Like and Unlike operations
+  const likePost = async (postId) => {
+    try {
+      const res = await fetch(
+        `https://blog-system-server.vercel.app/api/posts/${postId}/like`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to like post");
+
+      // Optimistically update state
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === postId
+            ? {
+                ...post,
+                likes: [...post.likes, user.id], // add current user to likes
+              }
+            : post
+        )
+      );
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
+  };
+
+  const unlikePost = async (postId) => {
+    try {
+      const res = await fetch(
+        `https://blog-system-server.vercel.app/api/posts/${postId}/unlike`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to unlike post");
+
+      // Optimistically update state
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === postId
+            ? {
+                ...post,
+                likes: post.likes.filter((uid) => uid !== user.id),
+              }
+            : post
+        )
+      );
+    } catch (error) {
+      console.error("Error unliking post:", error);
+    }
+  };
+
+  // Comment operations
+  const addComment = async (postId, commentText) => {
+    const response = await fetch(
+      `https://blog-system-server.vercel.app/api/posts/${postId}/comments`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ text: commentText }),
+      }
+    );
+
+    const newComment = await response.json();
+
+    if (!response.ok) {
+      throw new Error(newComment.message || "Failed to add comment");
+    }
+
+    // Update post with new comment
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId
+          ? { ...post, comments: [...post.comments, newComment] }
+          : post
+      )
+    );
+
+    return newComment;
+  };
+
+  const deleteComment = async (postId, commentId) => {
+    const response = await fetch(
+      `https://blog-system-server.vercel.app/api/posts/${postId}/comments/${commentId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || "Failed to delete comment");
+    }
+
+    // Remove comment from state
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId
+          ? {
+              ...post,
+              comments: post.comments.filter((c) => c._id !== commentId),
+            }
+          : post
+      )
+    );
+  };
+
   return (
     <PostsContext.Provider
       value={{
@@ -120,6 +242,10 @@ export const PostsProvider = ({ children }) => {
         createPost,
         updatePost,
         deletePost,
+        likePost,
+        unlikePost,
+        addComment,
+        deleteComment,
         token,
         user,
         isLoggedIn: !!(token && user),
