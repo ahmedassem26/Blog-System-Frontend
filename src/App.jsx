@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
+import ScrollToTop from "./utilities/ScrollToTop";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <div className="flex flex-col min-h-screen">
           <Navbar />
           <div className="flex-grow pt-16">
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
