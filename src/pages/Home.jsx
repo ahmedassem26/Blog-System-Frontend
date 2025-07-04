@@ -108,7 +108,7 @@ function Home() {
               </Link>
             ) : (
               <Link
-                to="/login"
+                to="/register/login"
                 className="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-medium rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-1 transition-all duration-300 border border-purple-500/20"
               >
                 <svg

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 function Register() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-base-300 via-purple-800/20 to-base-300 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-base-300 via-purple-800/20 to-base-300 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
       {/* Subtle grid pattern overlay */}
       <div
         className="absolute inset-0 opacity-[0.02]"
