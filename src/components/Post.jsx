@@ -173,11 +173,7 @@ function Post({ post }) {
             <div className="flex gap-3">
               {/* Edit Button */}
               <Link
-                to={`/edit/${post._id}?title=${encodeURIComponent(
-                  post.title
-                )}&description=${encodeURIComponent(
-                  post.description
-                )}&imageUrl=${encodeURIComponent(post.imageUrl)}`}
+                to={`/edit/${post._id}`}
                 className="group/btn flex items-center space-x-2 px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 hover:border-purple-400/50 text-purple-400 hover:text-purple-300 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
               >
                 <svg

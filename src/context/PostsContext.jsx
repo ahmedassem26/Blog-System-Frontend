@@ -5,7 +5,6 @@ export const PostsContext = createContext();
 
 export const PostsProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
-  const [postMode, setpostMode] = useState("Add");
   const [loading, setLoading] = useState(true);
   const { token, user } = useContext(AuthContext);
 
@@ -36,15 +35,6 @@ export const PostsProvider = ({ children }) => {
   useEffect(() => {
     getAllPosts();
   }, []);
-
-  //handlers
-  const handleEditPost = () => {
-    setpostMode("Edit");
-  };
-
-  const handleAddPost = () => {
-    setpostMode("Add");
-  };
 
   //Post operations
   const createPost = async (postData) => {
@@ -232,13 +222,12 @@ export const PostsProvider = ({ children }) => {
     );
   };
 
+  const getPostById = (id) => posts.find((p) => p._id === id);
+
   return (
     <PostsContext.Provider
       value={{
         posts,
-        postMode,
-        handleAddPost,
-        handleEditPost,
         createPost,
         updatePost,
         deletePost,
@@ -250,6 +239,7 @@ export const PostsProvider = ({ children }) => {
         user,
         isLoggedIn: !!(token && user),
         postsLoading: loading,
+        getPostById,
       }}
     >
       {children}

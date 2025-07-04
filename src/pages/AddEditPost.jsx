@@ -1,40 +1,70 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PostsContext } from "../context/PostsContext";
+import Spinner from "../components/Spinner";
+import toast from "react-hot-toast";
 
 const AddEditPost = () => {
-  const { createPost, updatePost } = useContext(PostsContext);
+  const { createPost, updatePost, getPostById } = useContext(PostsContext);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [searchParams] = useSearchParams();
+  const [loading, setLoading] = useState(!!id);
+  const [notFound, setNotFound] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: id
-      ? {
-          title: searchParams.get("title") || "",
-          description: searchParams.get("description") || "",
-          imageUrl: searchParams.get("imageUrl") || "",
-        }
-      : {},
-  });
+    reset,
+  } = useForm();
+
+  useEffect(() => {
+    if (id) {
+      // Use getPostById from context
+      const post = getPostById(id);
+      if (post) {
+        reset({
+          title: post.title,
+          description: post.description,
+          imageUrl: post.imageUrl,
+        });
+        setLoading(false);
+      } else {
+        setNotFound(true);
+        setLoading(false);
+      }
+    }
+  }, [id, getPostById, reset]);
 
   const handleFormSubmit = async (data) => {
+    const toastId = toast.loading(id ? "Updating post..." : "Creating post...");
     try {
       if (!id) {
         await createPost(data);
+        toast.success("Post created!", { id: toastId });
       } else {
         await updatePost(id, data);
+        toast.success("Post updated!", { id: toastId });
       }
       navigate("/");
     } catch (error) {
+      toast.error(error.message || "Something went wrong.", { id: toastId });
       alert(error.message);
     }
   };
+
+  if (loading) {
+    return <Spinner subtext={id ? "Loading post for editing" : "Loading..."} />;
+  }
+
+  if (notFound) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div className="text-red-400 text-lg">Post not found.</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-12 px-4 sm:px-6 lg:px-8">

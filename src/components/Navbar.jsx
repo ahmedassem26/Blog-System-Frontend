@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Modal from "./Modal";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -13,7 +14,8 @@ const Navbar = () => {
     logout();
     setModalOpen(false);
     setMobileMenuOpen(false);
-    navigate("/login");
+    toast.success("Logged out successfully!");
+    navigate("/register/login");
   };
 
   return (
@@ -93,7 +95,7 @@ const Navbar = () => {
               ) : (
                 <div className="flex items-center space-x-3">
                   <Link
-                    to="/login"
+                    to="/register/login"
                     className="group px-6 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-medium rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-0.5 transition-all duration-300 border border-purple-500/20"
                   >
                     <span className="flex items-center space-x-2">
@@ -110,12 +112,12 @@ const Navbar = () => {
                           d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
                         />
                       </svg>
-                      <span>Login</span>
+                      <span>Log in</span>
                     </span>
                   </Link>
 
                   <Link
-                    to="/register"
+                    to="/register/signup"
                     className="group px-4 py-2 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 hover:border-purple-400/50 text-purple-400 hover:text-purple-300 font-medium rounded-xl transition-all duration-300 transform hover:scale-105"
                   >
                     <span className="flex items-center space-x-2">
@@ -132,7 +134,7 @@ const Navbar = () => {
                           d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
                         />
                       </svg>
-                      <span>Register</span>
+                      <span>Sign up</span>
                     </span>
                   </Link>
                 </div>
@@ -228,7 +230,7 @@ const Navbar = () => {
             ) : (
               <div className="space-y-3">
                 <Link
-                  to="/login"
+                  to="/register/login"
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full group flex items-center justify-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-500 hover:to-purple-600 text-white font-medium rounded-xl shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-0.5 transition-all duration-300 border border-purple-500/20"
                 >
@@ -249,7 +251,7 @@ const Navbar = () => {
                 </Link>
 
                 <Link
-                  to="/register"
+                  to="/register/signup"
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full group flex items-center justify-center space-x-2 px-4 py-3 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 hover:border-purple-400/50 text-purple-400 hover:text-purple-300 font-medium rounded-xl transition-all duration-300 transform hover:scale-105"
                 >

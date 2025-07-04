@@ -13,7 +13,7 @@ const PrivateRoute = ({ children }) => {
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
-        navigate("/login");
+        navigate("/register/login");
       }
       setLoading(false);
     };
