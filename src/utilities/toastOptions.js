@@ -7,7 +7,7 @@ const toastOptions = {
     fontFamily: "inherit",
   },
   success: {
-    icon: "🚀",
+    icon: "✅",
     style: {
       background: "#4f378b",
       color: "#fff",

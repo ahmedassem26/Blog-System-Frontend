@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { PostsContext } from "../context/PostsContext";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
+import toast from "react-hot-toast";
 
 function Post({ post }) {
   const {
@@ -18,6 +19,7 @@ function Post({ post }) {
   const [isLiked, setIsLiked] = useState(() => post.likes.includes(user?.id));
   const [showAllComments, setShowAllComments] = useState(false);
   const [showComments, setShowComments] = useState(false); // New state for showing/hiding comments section
+  const [commentToDelete, setCommentToDelete] = useState(null); // For comment delete modal
 
   const commentsToShow = showAllComments
     ? post.comments
@@ -32,9 +34,31 @@ function Post({ post }) {
     setModalOpen(true);
   };
 
-  const handleDelete = () => {
-    deletePost(post._id);
-    setModalOpen(false);
+  const handleDelete = async () => {
+    const toastId = toast.loading("Deleting post...");
+    try {
+      await deletePost(post._id);
+      toast.success("Post deleted!", { id: toastId });
+      setModalOpen(false);
+    } catch (error) {
+      toast.error(error.message || "Failed to delete post.", { id: toastId });
+      setModalOpen(false);
+    }
+  };
+
+  const handleDeleteComment = async () => {
+    if (!commentToDelete) return;
+    const toastId = toast.loading("Deleting comment...");
+    try {
+      await deleteComment(post._id, commentToDelete._id);
+      toast.success("Comment deleted!", { id: toastId });
+      setCommentToDelete(null);
+    } catch (error) {
+      toast.error(error.message || "Failed to delete comment.", {
+        id: toastId,
+      });
+      setCommentToDelete(null);
+    }
   };
 
   const handleLikeToggle = async () => {
@@ -48,6 +72,20 @@ function Post({ post }) {
 
   const handleCommentsToggle = () => {
     setShowComments(!showComments);
+  };
+
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+    const commentText = e.target.comment.value.trim();
+    if (!commentText) return;
+    const toastId = toast.loading("Adding comment...");
+    try {
+      await addComment(post._id, commentText);
+      toast.success("Comment added!", { id: toastId });
+      e.target.reset();
+    } catch (error) {
+      toast.error(error.message || "Failed to add comment.", { id: toastId });
+    }
   };
 
   return (
@@ -239,7 +277,7 @@ function Post({ post }) {
                   </div>
                   {token && user?.id === comment.user?._id && (
                     <button
-                      onClick={() => deleteComment(post._id, comment._id)}
+                      onClick={() => setCommentToDelete(comment)}
                       className="flex-shrink-0 p-2 text-red-400 hover:text-red-300 bg-red-500/5 hover:bg-red-500/20 border border-red-500/20 hover:border-red-400/40 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25 group/delete"
                       title="Delete comment"
                     >
@@ -298,13 +336,7 @@ function Post({ post }) {
             {token && (
               <form
                 className="flex gap-2 items-center mt-2"
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  const commentText = e.target.comment.value.trim();
-                  if (!commentText) return;
-                  await addComment(post._id, commentText);
-                  e.target.reset();
-                }}
+                onSubmit={handleAddComment}
               >
                 <input
                   type="text"
@@ -366,6 +398,54 @@ function Post({ post }) {
             </button>
             <button
               onClick={handleDelete}
+              className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-medium rounded-xl shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-0.5 transition-all duration-300 border border-red-500/20"
+            >
+              Yes, Delete
+            </button>
+          </div>
+        </div>
+      </Modal>
+      {/* Comment Delete Modal */}
+      <Modal
+        isOpen={!!commentToDelete}
+        onClose={() => setCommentToDelete(null)}
+        title="Delete Comment"
+      >
+        <div className="space-y-4">
+          <div className="flex items-center space-x-3 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
+            <div className="flex-shrink-0">
+              <svg
+                className="w-6 h-6 text-red-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"
+                />
+              </svg>
+            </div>
+            <div>
+              <p className="text-base-content/90 font-medium">
+                Are you sure you want to delete this comment?
+              </p>
+              <p className="text-base-content/70 text-sm mt-1">
+                This action cannot be undone.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 pt-4">
+            <button
+              onClick={() => setCommentToDelete(null)}
+              className="px-4 py-2 bg-base-200/50 hover:bg-base-200 border border-base-content/20 hover:border-base-content/30 text-base-content/80 hover:text-base-content rounded-xl transition-all duration-300"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleDeleteComment}
               className="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-medium rounded-xl shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-0.5 transition-all duration-300 border border-red-500/20"
             >
               Yes, Delete
